@@ -24,12 +24,17 @@ syn keyword tmuxEnums yes no
 syn keyword tmuxTodo FIXME NOTE TODO XXX contained
 
 syn match tmuxColour            /\<colou\?r[0-9]\+\>/  display
+" syn match tmuxKey               /\w/ contained
+syn match tmuxSingleCharKey     /\w/ contained
 syn match tmuxKey               /\(C-\|M-\|\^\)\+\S\+/ display
+syn match tmuxKey               /F\(1[012]\|[1-9]\)\($\|\s\)/ display
 syn match tmuxNumber            /\<\d\+\>/             display
 syn match tmuxFlags             /\s-\a\+/              display
 syn match tmuxVariableExpansion /\$\({[A-Za-z_]\w*}\|[A-Za-z_]\w*\)/ display
 syn match tmuxControl           /\(^\|\s\)%\(if\|elif\|else\|endif\|hidden\)\($\|\s\)/ display
 syn match tmuxEscape            /\\\(u\x\{4\}\|U\x\{8\}\|\o\{3\}\|[\\ernt$]\)/ display
+
+syn keyword tmuxCommands bind-key nextgroup=tmuxKey,tmuxSingleCharKey skipwhite
 
 " Missing closing bracket.
 syn match tmuxInvalidVariableExpansion /\${[^}]*$/ display
@@ -66,6 +71,7 @@ hi def link tmuxEscapeUnquoted    Special
 hi def link tmuxInvalidVariableExpansion
 \                                 Error
 hi def link tmuxKey               Special
+hi def link tmuxSingleCharKey     tmuxKey
 hi def link tmuxNumber            Number
 hi def link tmuxFlags             Identifier
 hi def link tmuxOptions           Function
@@ -136,7 +142,7 @@ syn keyword tmuxOptions
 \ word-separators wrap-search xterm-keys
 
 syn keyword tmuxCommands
-\ attach attach-session bind bind-key break-pane breakp capture-pane capturep
+\ attach attach-session bind break-pane breakp capture-pane capturep
 \ choose-buffer choose-client choose-session choose-tree choose-window
 \ clear-history clear-prompt-history clearhist clearphist clock-mode
 \ command-prompt confirm confirm-before copy-mode customize-mode delete-buffer
@@ -167,6 +173,10 @@ syn keyword tmuxEnums
 \ double emacs external failed heavy keep-group keep-last largest latest left
 \ manual next no-detached none number off on other padded previous right
 \ rounded simple single smallest top underline vi
+
+syn keyword tmuxKey
+\ Up Down Left Right BSpace BTab DC End Enter Escape Home IC NPage PageDown PgDn
+\ PPage PageUp PgUp Space Tab
 
 let &cpo = s:original_cpo
 unlet! s:original_cpo s:bg s:i
